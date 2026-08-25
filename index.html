@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Trabajos</title>
+    <!-- Tailwind CSS por CDN para estilos rápidos (opcional, pero ayuda mucho) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 h-screen overflow-hidden flex">
+
+    <!-- PANEL IZQUIERDO: FORMULARIO -->
+    <div class="w-1/2 p-6 overflow-y-auto border-r bg-white flex flex-col gap-4 form-panel">
+        <h2 class="text-2xl font-bold text-gray-800">Gestor de Trabajos</h2>
+        
+        <!-- Selector de Tema -->
+        <div>
+            <label class="block font-semibold mb-1 text-gray-700">Tema del PDF</label>
+            <select id="selectorTema" class="w-full p-2 border rounded">
+                <option value="tema-clasico">Clásico (Serif)</option>
+                <option value="tema-moderno">Moderno (Sans-serif)</option>
+                <option value="tema-minimalista">Minimalista (Mono)</option>
+            </select>
+        </div>
+
+        <!-- Campos del formulario -->
+        <div class="flex flex-col gap-3" id="formularioEntrada">
+            <input type="text" id="in-portada" placeholder="Título de la Portada" class="w-full p-2 border rounded">
+            <textarea id="in-problematica" placeholder="Problemática" rows="3" class="w-full p-2 border rounded"></textarea>
+            <textarea id="in-estadoArte" placeholder="Estado del Arte" rows="3" class="w-full p-2 border rounded"></textarea>
+            <textarea id="in-pautas" placeholder="Pautas" rows="3" class="w-full p-2 border rounded"></textarea>
+            <textarea id="in-diagnostico" placeholder="Diagnóstico" rows="3" class="w-full p-2 border rounded"></textarea>
+            <textarea id="in-necesidades" placeholder="Necesidades Priorizadas" rows="3" class="w-full p-2 border rounded"></textarea>
+            <textarea id="in-descripcion" placeholder="Descripción del Proyecto" rows="3" class="w-full p-2 border rounded"></textarea>
+        </div>
+
+        <div class="flex gap-4 mt-4">
+            <button id="btnGuardar" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                Guardar en BD
+            </button>
+            <button id="btnExportar" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                Exportar PDF
+            </button>
+        </div>
+        <p id="mensajeEstado" class="text-sm text-center font-semibold mt-2 hidden"></p>
+    </div>
+
+    <!-- PANEL DERECHO: PREVISUALIZACIÓN A4 -->
+    <div class="w-1/2 p-8 bg-gray-300 overflow-y-auto flex justify-center preview-panel">
+        <div id="documentoA4" class="documento-a4 tema-clasico">
+            <h1 id="out-portada" class="text-4xl font-bold text-center mb-12 border-b-2 pb-4">Título del Trabajo</h1>
+            
+            <!-- Secciones dinámicas -->
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Problemática</h2><p id="out-problematica"></p></div>
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Estado del Arte</h2><p id="out-estadoArte"></p></div>
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Pautas</h2><p id="out-pautas"></p></div>
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Diagnóstico</h2><p id="out-diagnostico"></p></div>
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Necesidades Priorizadas</h2><p id="out-necesidades"></p></div>
+            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Descripción del Proyecto</h2><p id="out-descripcion"></p></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
