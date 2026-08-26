@@ -10,13 +10,14 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(express.json());
 
 // Limpieza de URL
-let dbUrl = (process.env.TURSO_DATABASE_URL || '').trim();
-if (dbUrl.startsWith('https://')) {
-    dbUrl = dbUrl.replace('https://', 'libsql://');
+let rawUrl = (process.env.TURSO_DATABASE_URL || '').trim();
+// Reemplazar libsql:// por https:// para evitar el modulo de migraciones
+if (rawUrl.startsWith('libsql://')) {
+    rawUrl = rawUrl.replace('libsql://', 'https://');
 }
 
 const db = createClient({
-    url: dbUrl,
+    url: rawUrl,
     authToken: (process.env.TURSO_AUTH_TOKEN || '').trim(),
 });
 
