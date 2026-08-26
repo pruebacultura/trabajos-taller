@@ -1,5 +1,5 @@
 // CONFIGURACIÓN DE LA API (Cambiar por tu URL de Render cuando la tengas)
-const API_URL = 'https://TU-BACKEND.onrender.com/api/trabajo'; 
+const API_URL = 'https://backend-trabajos.onrender.com/api/trabajo'; 
 
 const campos = ['portada', 'problematica', 'estadoArte', 'pautas', 'diagnostico', 'necesidades', 'descripcion'];
 
