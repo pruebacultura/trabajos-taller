@@ -3,61 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Trabajos</title>
-    <!-- Tailwind CSS por CDN para estilos rápidos (opcional, pero ayuda mucho) -->
+    <title>Gestor de Trabajos Académicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 h-screen overflow-hidden flex">
+<body class="bg-gray-100 h-screen flex overflow-hidden">
 
-    <!-- PANEL IZQUIERDO: FORMULARIO -->
-    <div class="w-1/2 p-6 overflow-y-auto border-r bg-white flex flex-col gap-4 form-panel">
-        <h2 class="text-2xl font-bold text-gray-800">Gestor de Trabajos</h2>
-        
-        <!-- Selector de Tema -->
-        <div>
-            <label class="block font-semibold mb-1 text-gray-700">Tema del PDF</label>
-            <select id="selectorTema" class="w-full p-2 border rounded">
-                <option value="tema-clasico">Clásico (Serif)</option>
-                <option value="tema-moderno">Moderno (Sans-serif)</option>
-                <option value="tema-minimalista">Minimalista (Mono)</option>
-            </select>
-        </div>
-
-        <!-- Campos del formulario -->
-        <div class="flex flex-col gap-3" id="formularioEntrada">
-            <input type="text" id="in-portada" placeholder="Título de la Portada" class="w-full p-2 border rounded">
-            <textarea id="in-problematica" placeholder="Problemática" rows="3" class="w-full p-2 border rounded"></textarea>
-            <textarea id="in-estadoArte" placeholder="Estado del Arte" rows="3" class="w-full p-2 border rounded"></textarea>
-            <textarea id="in-pautas" placeholder="Pautas" rows="3" class="w-full p-2 border rounded"></textarea>
-            <textarea id="in-diagnostico" placeholder="Diagnóstico" rows="3" class="w-full p-2 border rounded"></textarea>
-            <textarea id="in-necesidades" placeholder="Necesidades Priorizadas" rows="3" class="w-full p-2 border rounded"></textarea>
-            <textarea id="in-descripcion" placeholder="Descripción del Proyecto" rows="3" class="w-full p-2 border rounded"></textarea>
-        </div>
-
-        <div class="flex gap-4 mt-4">
-            <button id="btnGuardar" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
-                Guardar en BD
-            </button>
-            <button id="btnExportar" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                Exportar PDF
+    <!-- MENÚ LATERAL (IZQUIERDA) -->
+    <aside class="w-80 bg-slate-900 text-white flex flex-col border-r border-slate-800 shrink-0">
+        <div class="p-4 border-b border-slate-800 flex flex-col gap-3">
+            <h1 class="text-xl font-bold text-blue-400">Gestor de Trabajos</h1>
+            <button id="btnNuevoTrabajo" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2 transition">
+                <span>+</span> Nuevo Trabajo
             </button>
         </div>
-        <p id="mensajeEstado" class="text-sm text-center font-semibold mt-2 hidden"></p>
+        <div class="p-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Mis Trabajos</div>
+        <ul id="listaTrabajos" class="overflow-y-auto flex-1 px-2 space-y-1">
+            <!-- Se llena dinámicamente -->
+        </ul>
+    </aside>
+
+    <!-- ÁREA CENTRAL (FORMULARIO DEL TRABAJO) -->
+    <main class="flex-1 flex flex-col overflow-hidden bg-white">
+        <!-- BARRA SUPERIOR DE ACCIONES -->
+        <header id="headerAcciones" class="h-16 border-b px-6 flex items-center justify-between bg-slate-50 shrink-0 hidden">
+            <h2 id="tituloTrabajoActual" class="text-lg font-bold text-slate-800 truncate">Selecciona un trabajo</h2>
+            <div class="flex gap-3">
+                <button id="btnGuardar" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded text-sm transition">
+                    Guardar Cambios
+                </button>
+                <button id="btnPrevisualizar" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded text-sm transition">
+                    Previsualizar HTML
+                </button>
+            </div>
+        </header>
+
+        <!-- FORMULARIO DE EDICIÓN -->
+        <div id="contenedorFormulario" class="flex-1 overflow-y-auto p-8 max-w-4xl mx-auto w-full hidden">
+            <p id="mensajeEstado" class="hidden mb-4 p-3 rounded text-sm font-semibold text-center"></p>
+
+            <!-- Datos Generales -->
+            <fieldset class="border p-4 rounded mb-6 bg-slate-50/50">
+                <legend class="font-bold text-slate-700 px-2">Datos de Portada</legend>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Título del Trabajo</label>
+                        <input type="text" id="in-titulo" class="w-full p-2 border rounded text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Integrantes</label>
+                        <input type="text" id="in-integrantes" placeholder="Ej: Juan Pérez, Maria Gómez" class="w-full p-2 border rounded text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Profesor/a</label>
+                        <input type="text" id="in-profesor" class="w-full p-2 border rounded text-sm">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Materia</label>
+                        <input type="text" id="in-materia" class="w-full p-2 border rounded text-sm bg-gray-100" readonly>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Secciones del Trabajo -->
+            <div class="space-y-4">
+                <div><label class="block font-semibold text-slate-700 mb-1">1. Problemática</label><textarea id="in-problematica" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="block font-semibold text-slate-700 mb-1">2. Estado del Arte</label><textarea id="in-estadoArte" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="block font-semibold text-slate-700 mb-1">3. Pautas</label><textarea id="in-pautas" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="block font-semibold text-slate-700 mb-1">4. Diagnóstico</label><textarea id="in-diagnostico" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="block font-semibold text-slate-700 mb-1">5. Necesidades Priorizadas</label><textarea id="in-necesidades" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="block font-semibold text-slate-700 mb-1">6. Descripción del Proyecto</label><textarea id="in-descripcion" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+            </div>
+        </div>
+
+        <!-- Pantalla de bienvenida sin selección -->
+        <div id="vacioState" class="flex-1 flex flex-col items-center justify-center text-slate-400">
+            <p class="text-lg">Selecciona un trabajo del menú lateral o crea uno nuevo.</p>
+        </div>
+    </main>
+
+    <!-- MODAL: CREAR NUEVO TRABAJO -->
+    <div id="modalNuevo" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Nuevo Trabajo</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Título del Trabajo *</label>
+                    <input type="text" id="modal-titulo" required class="w-full p-2 border rounded text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nombre de Integrantes</label>
+                    <input type="text" id="modal-integrantes" placeholder="Ej: Juan Perez, Ana Clara" class="w-full p-2 border rounded text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Nombre del Profesor/a</label>
+                    <input type="text" id="modal-profesor" class="w-full p-2 border rounded text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Materia</label>
+                    <input type="text" id="modal-materia" value="Taller 1 - Tecnicatura en gestión de políticas públicas" class="w-full p-2 border rounded text-sm bg-gray-100" readonly>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-6">
+                <button id="btnCancelarModal" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded">Cancelar</button>
+                <button id="btnCrearModal" class="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded">Crear Trabajo</button>
+            </div>
+        </div>
     </div>
 
-    <!-- PANEL DERECHO: PREVISUALIZACIÓN A4 -->
-    <div class="w-1/2 p-8 bg-gray-300 overflow-y-auto flex justify-center preview-panel">
-        <div id="documentoA4" class="documento-a4 tema-clasico">
-            <h1 id="out-portada" class="text-4xl font-bold text-center mb-12 border-b-2 pb-4">Título del Trabajo</h1>
-            
-            <!-- Secciones dinámicas -->
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Problemática</h2><p id="out-problematica"></p></div>
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Estado del Arte</h2><p id="out-estadoArte"></p></div>
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Pautas</h2><p id="out-pautas"></p></div>
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Diagnóstico</h2><p id="out-diagnostico"></p></div>
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Necesidades Priorizadas</h2><p id="out-necesidades"></p></div>
-            <div class="seccion hidden"><h2 class="text-2xl font-semibold mb-2">Descripción del Proyecto</h2><p id="out-descripcion"></p></div>
+    <!-- MODAL VISTA PREVIA HTML (DOCUMENTO A4) -->
+    <div id="modalPreview" class="fixed inset-0 bg-slate-900/80 flex flex-col hidden z-50">
+        <div class="h-16 bg-slate-800 px-6 flex items-center justify-between text-white shrink-0">
+            <div class="flex items-center gap-4">
+                <span class="font-semibold text-sm">Tema Estético:</span>
+                <select id="selectorTema" class="bg-slate-700 text-white text-sm p-2 rounded border border-slate-600">
+                    <option value="tema-academico">Académico Institucional</option>
+                    <option value="tema-ejecutivo">Moderno Ejecutivo</option>
+                    <option value="tema-vanguardia">Minimalista Vanguardia</option>
+                </select>
+            </div>
+            <div class="flex gap-3">
+                <button id="btnGenerarPDF" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded text-sm transition">
+                    Generar PDF
+                </button>
+                <button id="btnCerrarPreview" class="bg-slate-600 hover:bg-slate-500 text-white font-medium py-2 px-4 rounded text-sm">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-8 flex justify-center bg-slate-700/50">
+            <!-- Hoja A4 -->
+            <div id="hojaA4" class="documento-a4 tema-academico">
+                <!-- Portada Generada -->
+                <div class="portada-container mb-12 flex flex-col justify-between">
+                    <div class="header-materia text-xs uppercase tracking-widest font-bold mb-8 text-center" id="prev-materia"></div>
+                    <div class="my-auto text-center">
+                        <h1 class="text-3xl font-bold mb-6" id="prev-titulo"></h1>
+                    </div>
+                    <div class="datos-meta text-sm border-t pt-6 space-y-1">
+                        <p><strong>Integrantes:</strong> <span id="prev-integrantes"></span></p>
+                        <p><strong>Profesor/a:</strong> <span id="prev-profesor"></span></p>
+                    </div>
+                </div>
+
+                <!-- Secciones Dinámicas -->
+                <div class="secciones-container space-y-6">
+                    <div class="sec-prev hidden" id="sec-problematica"><h2 class="text-xl font-bold mb-2">1. Problemática</h2><p id="prev-problematica"></p></div>
+                    <div class="sec-prev hidden" id="sec-estadoArte"><h2 class="text-xl font-bold mb-2">2. Estado del Arte</h2><p id="prev-estadoArte"></p></div>
+                    <div class="sec-prev hidden" id="sec-pautas"><h2 class="text-xl font-bold mb-2">3. Pautas</h2><p id="prev-pautas"></p></div>
+                    <div class="sec-prev hidden" id="sec-diagnostico"><h2 class="text-xl font-bold mb-2">4. Diagnóstico</h2><p id="prev-diagnostico"></p></div>
+                    <div class="sec-prev hidden" id="sec-necesidades"><h2 class="text-xl font-bold mb-2">5. Necesidades Priorizadas</h2><p id="prev-necesidades"></p></div>
+                    <div class="sec-prev hidden" id="sec-descripcion"><h2 class="text-xl font-bold mb-2">6. Descripción del Proyecto</h2><p id="prev-descripcion"></p></div>
+                </div>
+            </div>
         </div>
     </div>
 
