@@ -1,0 +1,107 @@
+/* Dimensiones de la Hoja A4 */
+.documento-a4 {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 25mm 20mm;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.sec-prev p {
+    white-space: pre-wrap;
+    text-align: justify;
+    line-height: 1.6;
+}
+
+/* ==========================================================
+   TEMA 1: ACADÉMICO INSTITUCIONAL
+   ========================================================== */
+.tema-academico {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: #111827;
+}
+.tema-academico .header-materia {
+    color: #1e3a8a;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 8px;
+}
+.tema-academico h1 {
+    color: #1e3a8a;
+    text-transform: uppercase;
+}
+.tema-academico h2 {
+    color: #1e3a8a;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 4px;
+}
+
+/* ==========================================================
+   TEMA 2: MODERNO EJECUTIVO
+   ========================================================== */
+.tema-ejecutivo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #334155;
+}
+.tema-ejecutivo .header-materia {
+    color: #0f766e;
+    background: #f0fdfa;
+    padding: 8px;
+    border-radius: 4px;
+}
+.tema-ejecutivo h1 {
+    color: #0f766e;
+}
+.tema-ejecutivo h2 {
+    color: #0f766e;
+    background-color: #f1f5f9;
+    padding: 6px 10px;
+    border-left: 4px solid #0f766e;
+}
+
+/* ==========================================================
+   TEMA 3: MINIMALISTA VANGUARDIA
+   ========================================================== */
+.tema-vanguardia {
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+}
+.tema-vanguardia .header-materia {
+    border: 1px solid #000;
+    padding: 6px;
+}
+.tema-vanguardia h1 {
+    letter-spacing: -1px;
+}
+.tema-vanguardia h2 {
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+/* ==========================================================
+   ESTILOS DE IMPRESIÓN (PDF)
+   ========================================================== */
+@media print {
+    body {
+        background: white !important;
+        display: block !important;
+    }
+    aside, main, #headerAcciones, #modalPreview > div:first-child {
+        display: none !important;
+    }
+    #modalPreview {
+        position: static !important;
+        background: transparent !important;
+        display: block !important;
+    }
+    .documento-a4 {
+        box-shadow: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    @page {
+        margin: 20mm;
+    }
+}
