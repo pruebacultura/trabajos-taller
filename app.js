@@ -47,8 +47,16 @@ function registrarEventos() {
 async function cargarListaTrabajos() {
     try {
         const res = await fetch(`${API_URL}/trabajos`);
+        if (!res.ok) {
+            throw new Error(`Error en el servidor: ${res.status}`);
+        }
         const trabajos = await res.json();
         
+        // Verificar que la respuesta sea un arreglo antes de usar forEach
+        if (!Array.isArray(trabajos)) {
+            throw new Error('La respuesta recibida no es un arreglo de trabajos.');
+        }
+
         listaTrabajosEl.innerHTML = '';
         trabajos.forEach(t => {
             const li = document.createElement('li');
