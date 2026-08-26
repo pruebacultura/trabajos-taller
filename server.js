@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { createClient } = require('@libsql/client');
+// Importar la variante WEB para omitir el módulo interno de migraciones
+const { createClient } = require('@libsql/client/web');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -9,25 +10,29 @@ const PORT = process.env.PORT || 10000;
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(express.json());
 
-// Limpieza de URL
-let rawUrl = (process.env.TURSO_DATABASE_URL || '').trim();
-// Reemplazar libsql:// por https:// para evitar el modulo de migraciones
-if (rawUrl.startsWith('libsql://')) {
-    rawUrl = rawUrl.replace('libsql://', 'https://');
+// Normalizar URL al formato HTTPS
+let dbUrl = (process.env.TURSO_DATABASE_URL || '').trim();
+if (dbUrl.startsWith('libsql://')) {
+    dbUrl = dbUrl.replace('libsql://', 'https://');
 }
 
+const dbToken = (process.env.TURSO_AUTH_TOKEN || '').trim();
+
+// Verificación de lectura de variables en Render
+console.log("🔍 Diagnóstico de conexión:");
+console.log("-> URL:", dbUrl || "❌ VACÍA");
+console.log("-> Token:", dbToken ? `Presente (${dbToken.length} chars)` : "❌ VACÍO");
+
 const db = createClient({
-    url: rawUrl,
-    authToken: (process.env.TURSO_AUTH_TOKEN || '').trim(),
+    url: dbUrl,
+    authToken: dbToken,
 });
 
-// 1. Iniciar el servidor Express inmediatamente
 app.listen(PORT, () => {
     console.log(`🚀 Servidor activo en el puerto ${PORT}`);
     initDB();
 });
 
-// 2. Inicializar la base de datos sin tumbar el servidor si falla
 async function initDB() {
     try {
         await db.execute(`
@@ -46,19 +51,18 @@ async function initDB() {
                 fecha DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         `);
-        console.log("✅ Conexión con Turso exitosa y tabla lista.");
+        console.log("✅ Base de datos Turso conectada e inicializada correctamente.");
     } catch (error) {
-        console.error("❌ ERROR DE CONEXIÓN CON TURSO:");
-        console.error("Verifica las credenciales en Render. Mensaje:", error.message);
+        console.error("❌ ERROR TURSO:", error.message);
     }
 }
 
-// Rutas de la API
 app.get('/api/trabajos', async (req, res) => {
     try {
         const result = await db.execute('SELECT id, titulo, fecha FROM trabajos ORDER BY fecha DESC');
         res.json(result.rows);
     } catch (error) {
+        console.error("Error GET /trabajos:", error.message);
         res.status(500).json({ error: 'Error al obtener lista' });
     }
 });
