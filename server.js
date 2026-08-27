@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 10000;
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(express.json());
 
-// Cliente HTTP directo para Turso (sin dependencias problemáticas)
+// Cliente HTTP robusto para Turso
 async function queryTurso(sql, args = []) {
     let dbUrl = (process.env.TURSO_DATABASE_URL || '').trim();
     if (dbUrl.startsWith('libsql://')) {
@@ -19,8 +19,16 @@ async function queryTurso(sql, args = []) {
     const token = (process.env.TURSO_AUTH_TOKEN || '').trim();
 
     if (!dbUrl || !token) {
-        throw new Error("Faltan las variables TURSO_DATABASE_URL o TURSO_AUTH_TOKEN en Render.");
+        throw new Error("Faltan las variables TURSO_DATABASE_URL o TURSO_AUTH_TOKEN en las variables de entorno de Render.");
     }
+
+    // Formateo seguro de argumentos
+    const formattedArgs = args.map(arg => {
+        if (typeof arg === 'number') {
+            return { type: 'integer', value: String(arg) };
+        }
+        return { type: 'text', value: String(arg ?? '') };
+    });
 
     const response = await fetch(`${dbUrl}/v2/pipeline`, {
         method: 'POST',
@@ -34,7 +42,7 @@ async function queryTurso(sql, args = []) {
                     type: 'execute',
                     stmt: {
                         sql: sql,
-                        args: args.map(a => ({ type: 'text', value: String(a ?? '') }))
+                        args: formattedArgs
                     }
                 },
                 { type: 'close' }
@@ -45,26 +53,35 @@ async function queryTurso(sql, args = []) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(`Respuesta Servidor: ${JSON.stringify(data)}`);
+        console.error("❌ Turso HTTP Error Status:", response.status, data);
+        throw new Error(`Turso HTTP Error ${response.status}: ${JSON.stringify(data)}`);
     }
 
-    const result = data.results[0];
-    if (result.type === 'error') {
-        throw new Error(result.error.message);
+    const resObj = data.results?.[0];
+    if (!resObj) throw new Error("Respuesta vacía de Turso");
+
+    if (resObj.type === 'error') {
+        console.error("❌ Turso SQL Error:", resObj.error);
+        throw new Error(resObj.error?.message || "Error ejecutando consulta en Turso");
     }
 
-    const cols = result.response.result.cols.map(c => c.name);
-    const rows = result.response.result.rows.map(row => {
+    const resResult = resObj.response?.result || {};
+    const rawCols = resResult.cols || [];
+    const rawRows = resResult.rows || [];
+
+    // Mapeo seguro de resultados
+    const cols = rawCols.map(c => c.name);
+    const rows = rawRows.map(row => {
         const obj = {};
         row.forEach((cell, idx) => {
-            obj[cols[idx]] = cell.value;
+            obj[cols[idx]] = cell ? cell.value : null;
         });
         return obj;
     });
 
     return {
         rows,
-        lastInsertRowid: result.response.result.last_insert_rowid
+        lastInsertRowid: resResult.last_insert_rowid ? Number(resResult.last_insert_rowid) : null
     };
 }
 
@@ -82,7 +99,7 @@ async function initDB() {
                 titulo TEXT NOT NULL,
                 integrantes TEXT,
                 profesor TEXT,
-                materia TEXT DEFAULT 'Taller 1',
+                materia TEXT DEFAULT 'Taller 1 - Tecnicatura en gestión de políticas públicas',
                 problematica TEXT,
                 estadoArte TEXT,
                 pautas TEXT,
@@ -92,30 +109,31 @@ async function initDB() {
                 fecha DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         `);
-        console.log("✅ Conexión con Turso exitosa y tabla verificada.");
+        console.log("✅ Base de datos Turso verificada e inicializada correctamente.");
     } catch (error) {
-        console.error("❌ ERROR TURSO DETALLADO:", error.message);
+        console.error("❌ Error en initDB:", error.message);
     }
 }
 
-// Rutas API
+// Rutas de la API
 app.get('/api/trabajos', async (req, res) => {
     try {
         const result = await queryTurso('SELECT id, titulo, fecha FROM trabajos ORDER BY fecha DESC');
         res.json(result.rows);
     } catch (error) {
         console.error('Error GET /trabajos:', error.message);
-        res.status(500).json({ error: 'Error al obtener lista' });
+        res.status(500).json({ error: error.message });
     }
 });
 
 app.get('/api/trabajo/:id', async (req, res) => {
     try {
         const result = await queryTurso('SELECT * FROM trabajos WHERE id = ?', [req.params.id]);
-        if (result.rows.length === 0) return res.status(404).json({ error: 'No encontrado' });
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Trabajo no encontrado' });
         res.json(result.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener el trabajo' });
+        console.error('Error GET /trabajo/:id:', error.message);
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -127,10 +145,10 @@ app.post('/api/trabajos', async (req, res) => {
              VALUES (?, ?, ?, ?, '', '', '', '', '', '')`,
             [titulo, integrantes, profesor, materia || 'Taller 1 - Tecnicatura en gestión de políticas públicas']
         );
-        res.status(201).json({ id: Number(result.lastInsertRowid) });
+        res.status(201).json({ id: result.lastInsertRowid });
     } catch (error) {
         console.error('Error POST /trabajos:', error.message);
-        res.status(500).json({ error: 'Error al crear trabajo' });
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -142,11 +160,23 @@ app.put('/api/trabajo/:id', async (req, res) => {
              titulo = ?, integrantes = ?, profesor = ?, materia = ?, 
              problematica = ?, estadoArte = ?, pautas = ?, diagnostico = ?, necesidades = ?, descripcion = ?
              WHERE id = ?`,
-            [titulo, integrantes, profesor, materia, problematica, estadoArte, pautas, diagnostico, necesidades, descripcion, req.params.id]
+            [
+                titulo, 
+                integrantes, 
+                profesor, 
+                materia, 
+                problematica, 
+                estadoArte, 
+                pautas, 
+                diagnostico, 
+                necesidades, 
+                descripcion, 
+                req.params.id
+            ]
         );
-        res.json({ mensaje: 'Actualizado correctamente' });
+        res.json({ mensaje: 'Trabajo actualizado correctamente' });
     } catch (error) {
-        console.error('Error PUT /trabajo:', error.message);
-        res.status(500).json({ error: 'Error al actualizar trabajo' });
+        console.error('Error PUT /trabajo/:id:', error.message);
+        res.status(500).json({ error: error.message });
     }
 });
