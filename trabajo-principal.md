@@ -8,8 +8,8 @@
 * **INSTITUCIÓN:** Universidad Nacional de Cuyo — Facultad de Ciencias Políticas y Sociales
 * **CARRERA:** Tecnicatura Universitaria en Gestión de Políticas Públicas
 * **PROYECTO:** SISTEMA FEDERADO DE DATOS SANITARIOS DE NIÑOS, NIÑAS Y ADOLESCENTES: GOBERNANZA DIGITAL, AUTONOMÍA PROGRESIVA E INTEROPERABILIDAD FEDERAL (2026-2030)
-* **PROFESORA:** Cátedra de Taller de Práctica I
-* **ESTUDIANTES:** Equipo de Investigación en Políticas Públicas y Transformación Digital
+* **PROFESORA:** Maria Lara
+* **ESTUDIANTES:** Denis Strappa, Haas Jorge, Hernan Moyano
 
 ---
 
