@@ -32,7 +32,7 @@ El proyecto identifica como actores principales:
 
 **Materia:** gobernanza de datos sanitarios, protección de datos personales, interoperabilidad y autonomía progresiva.
 
-**Sector:** sistema de salud y transformación digital del Estado.
+**Sector:** Comprende a la totalidad de los niños, niñas y adolescentes (NNA) de 0 a 17 años inscritos como usuarios en los subsistemas público, de la seguridad social (obras sociales) y privado (prepagas) de la República Argentina. La intervención contempla la dinámica prestacional en los tres niveles de atención médica y la mediación legal que ejercen los representantes parentales o tutores en interacción con los equipos de salud.
 
 **Territorio:** República Argentina, incluyendo las 23 provincias y la Ciudad Autónoma de Buenos Aires.
 
@@ -73,6 +73,15 @@ Por ello, el sistema no debería aplicar reglas rígidas exclusivamente basadas 
 | Adolescentes de 16 años o más | El CCyC los considera como adultos para las decisiones atinentes al cuidado de su propio cuerpo. |
 
 El sistema deberá evitar que estas categorías se conviertan en reglas automáticas que desconozcan las circunstancias particulares.
+
+#### 2.2 Mapeo de Políticas Públicas y Marco Normativo
+El ordenamiento jurídico argentino ofrece un marco normativo tutelar compuesto por leyes especiales:
+* **Ley 25.326 de Protección de Datos Personales (https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/norma.htm):** Define a los datos de salud como *datos sensibles*, exigiendo interpretación restrictiva y prohibiendo la cesión a terceros ajenos a la prestación médica.
+* **Ley 26.529 de Derechos del Paciente (https://servicios.infoleg.gob.ar/infolegInternet/anexos/160000-164999/160432/norma.htm):** Consagra la autonomía de la voluntad, el trato digno y la confidencialidad de la documentación clínica.
+* **Ley 26.061 de Protección Integral de NNA (https://servicios.infoleg.gob.ar/infolegInternet/anexos/110000-114999/110778/norma.htm):** Establece la primacía del Interés Superior del Niño como la máxima satisfacción, integral y simultánea de sus derechos.
+* **Ley 27.706 de Historia Clínica Electrónica (https://www.boletinoficial.gob.ar/detalleAviso/primera/282707/20230316):** Crea el Programa Federal Único de Informatización y Digitalización de las Historias Clínicas.
+
+Proyectos como la Historia de Salud Integrada (HSI - https://www.argentina.gob.ar/salud/digital/hsi) a nivel nacional, o sistemas provinciales, representan avances significativos. Sin embargo, carecen de motores informáticos de reglas dinámicas capaces de restringir o habilitar permisos de visualización en función de las transformaciones etarias del usuario.
 
 ---
 
