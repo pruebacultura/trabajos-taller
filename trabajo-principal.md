@@ -153,12 +153,12 @@ Para la priorización de las intervenciones dentro de la política pública, se 
 
 ## 5.1 Tabla de Jerarquización de Necesidades Insatisfechas
 
-| Necesidades Sociales (Carencias del Nicho) | Gravedad (Tiempo) | Gravedad (Espacio) | Urgencia Subsector Público | Urgencia Seguridad Social | Urgencia Subsector Privado | Urgencia Oculta / Soc. Civil | TOTAL |
+| Necesidades Sociales | Gravedad (Tiempo) | Gravedad (Espacio) | Urgencia S. Público | Urgencia Seguridad Social | Urgencia S. Privado | Urgencia Soc. Civil | TOTAL |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **N1** (Vulneración de confidencialidad en adolescentes de 13-17 años) | 3 | 3 | 3 | 3 | 2 | 3 | **17** |
-| **N4** (Vulnerabilidad y desprotección ante ciberriesgos en la infancia) | 3 | 3 | 3 | 2 | 2 | 3 | **16** |
-| **N2** (Carencia de autonomía y control sobre los propios datos) | 3 | 3 | 2 | 2 | 2 | 3 | **15** |
-| **N3** (Discontinuidad e integralidad del historial clínico) | 3 | 2 | 2 | 2 | 2 | 2 | **13** |
+| **N1** (Confidencialidad y privacidad) | 3 | 3 | 3 | 3 | 2 | 3 | **17** |
+| **N4** (Seguridad frente a riesgos digitales) | 3 | 3 | 3 | 2 | 2 | 3 | **16** |
+| **N2** (Autonomía y control de información) | 3 | 3 | 2 | 2 | 2 | 3 | **15** |
+| **N3** (Continuidad de la atención) | 3 | 2 | 2 | 2 | 2 | 2 | **13** |
 
 *Escala de valoración: 1 (Baja), 2 (Media), 3 (Alta/Crítica).*
 
