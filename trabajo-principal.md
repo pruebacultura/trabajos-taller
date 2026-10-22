@@ -116,19 +116,19 @@ El proyecto utiliza como marco metodológico el modelo de las cuatro D:
 
 Se identifican las siguientes necesidades:
 
-### N1. Confidencialidad y privacidad
+### N1. Vulneración en Confidencialidad y privacidad
 
 Los NNA necesitan que la información sanitaria sea protegida y que el acceso se limite a quienes tengan una justificación legítima.
 
-### N2. Control y autonomía sobre la información
+### N2. Falta de Control y autonomía sobre la información
 
 Los adolescentes necesitan que el sistema pueda reconocer las distintas situaciones de autonomía progresiva previstas por la legislación.
 
-### N3. Continuidad de la atención sanitaria
+### N3. Discontinuidad de la atención sanitaria
 
 Los pacientes necesitan que la información relevante pueda acompañar la atención cuando reciben servicios en diferentes jurisdicciones o establecimientos.
 
-### N4. Seguridad frente a riesgos digitales
+### N4. Inseguridad frente a riesgos digitales
 
 El sistema necesita mecanismos de protección frente a accesos no autorizados, filtraciones, usos indebidos y otros riesgos de seguridad.
 
@@ -155,10 +155,10 @@ Para la priorización de las intervenciones dentro de la política pública, se 
 
 | Necesidades Sociales | Gravedad (Tiempo) | Gravedad (Espacio) | Urgencia S. Público | Urgencia Seguridad Social | Urgencia S. Privado | Urgencia Soc. Civil | TOTAL |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **N1** (Confidencialidad y privacidad) | 3 | 3 | 3 | 3 | 2 | 3 | **17** |
-| **N4** (Seguridad frente a riesgos digitales) | 3 | 3 | 3 | 2 | 2 | 3 | **16** |
-| **N2** (Autonomía y control de información) | 3 | 3 | 2 | 2 | 2 | 3 | **15** |
-| **N3** (Continuidad de la atención) | 3 | 2 | 2 | 2 | 2 | 2 | **13** |
+| **N1** (Vulnneración en Confidencialidad y privacidad) | 3 | 3 | 3 | 3 | 2 | 3 | **17** |
+| **N4** (Inseguridad frente a riesgos digitales) | 3 | 3 | 3 | 2 | 2 | 3 | **16** |
+| **N2** (Falta de Autonomía y control de información) | 3 | 3 | 2 | 2 | 2 | 3 | **15** |
+| **N3** (Discontinuidad de la atención) | 3 | 2 | 2 | 2 | 2 | 2 | **13** |
 
 *Escala de valoración: 1 (Baja), 2 (Media), 3 (Alta/Crítica).*
 
