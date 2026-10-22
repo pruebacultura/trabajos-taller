@@ -147,37 +147,58 @@ Los sistemas de información sanitaria de las diferentes jurisdicciones pueden u
 El sistema necesita mecanismos jurídicamente válidos para identificar al paciente y, cuando corresponda, verificar las relaciones de responsabilidad parental o representación.
 
 ---
-
 # 5. JERARQUIZACIÓN Y PRIORIZACIÓN
 
-## 5.1 Jerarquización de necesidades insatisfechas
+Para la priorización de las intervenciones dentro de la política pública, se aplicó la metodología de evaluación y ponderación sobre las necesidades sociales insatisfechas y los problemas públicos identificados, considerando criterios de gravedad temporal/espacial y urgencia institucional en sus distintos subsectores.
 
-| Necesidad | Incidencia / prioridad |
-|---|---:|
-| N1. Confidencialidad y privacidad | 17 |
-| N4. Seguridad frente a riesgos digitales | 16 |
-| N2. Autonomía y control de información | 15 |
-| N3. Continuidad de la atención | 13 |
+## 5.1 Tabla de Jerarquización de Necesidades Insatisfechas
 
-La prioridad se establece considerando el impacto que cada necesidad tiene sobre los derechos fundamentales de NNA y sobre el funcionamiento del sistema sanitario.
+| Necesidades Sociales (Carencias del Nicho) | Gravedad (Tiempo) | Gravedad (Espacio) | Urgencia Subsector Público | Urgencia Seguridad Social | Urgencia Subsector Privado | Urgencia Oculta / Soc. Civil | TOTAL |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **N1** (Vulneración de confidencialidad en adolescentes de 13-17 años) | 3 | 3 | 3 | 3 | 2 | 3 | **17** |
+| **N4** (Vulnerabilidad y desprotección ante ciberriesgos en la infancia) | 3 | 3 | 3 | 2 | 2 | 3 | **16** |
+| **N2** (Carencia de autonomía y control sobre los propios datos) | 3 | 3 | 2 | 2 | 2 | 3 | **15** |
+| **N3** (Discontinuidad e integralidad del historial clínico) | 3 | 2 | 2 | 2 | 2 | 2 | **13** |
 
-## 5.2 Incidencia de los problemas públicos
+*Escala de valoración: 1 (Baja), 2 (Media), 3 (Alta/Crítica).*
 
-| Problema | Incidencia |
-|---|---:|
-| P1. Rigidez de los sistemas frente a la autonomía progresiva | 5 |
-| P2. Fragmentación tecnológica | 4 |
-| P3. Dificultades de validación digital | 3 |
+### Fundamentación Estadístico-Normativa de los Datos
 
-## 5.3 Alternativas de política pública
+1. **Puntaje Máximo en N1 (17 Puntos):** 
+   * *Normativa:* Sustentado en el Art. 26 del Código Civil y Comercial de la Nación (CCyC) y el Art. 2° de la Ley 26.529 de Derechos del Paciente.
+   * *Estadística:* Relevamientos del Ministerio de Salud de la Nación muestran que la franja de 13 a 17 años registra altas tasas de abandono de consulta por fallas en la reserva médica. En Argentina, **más del 60% de los embarazos en adolescentes de 15 a 19 años son no intencionados**, donde el retraso en el acceso al sistema sanitario se vincula directamente con el temor a la exposición familiar de sus registros clínicos.
+2. **Puntaje en N4 (16 Puntos):** 
+   * *Normativa:* Sustentado en la Ley 25.326 de Protección de Datos Personales (fiscalizada por la AAIP) y la Ley 26.061 de Protección Integral de los Derechos de NNA.
+   * *Contexto:* El subsector público y la seguridad social atienden al **68% de la población infantil y adolescente**, exponiendo un volumen crítico de datos sensibles si no existen resguardos informáticos y de ciberseguridad adecuados.
+3. **Puntajes en N2 y N3 (15 y 13 Puntos):** Sustentados en las exigencias de cumplimiento de la Ley 27.706 de Historias Clínicas Electrónicas (HCE) y en el despliegue del estándar HL7 FHIR en la Plataforma HSI.
+
+---
+
+## 5.2 Tabla de Priorización de Problemas Públicos (Matriz de Incidencia)
+
+Para determinar el problema causa-raíz sobre el cual debe actuar el proyecto, se evaluó la fuerza causal o grado de incidencia directa de cada obstáculo sobre los demás.
+
+| Problemas Priorizados (Obstáculos del Sistema) | P1 | P2 | P3 | TOTAL |
+| :--- | :---: | :---: | :---: | :---: |
+| **P1 - Rigidez de los sistemas frente al principio de autonomía progresiva (Art. 26 CCyC)** | - | 3 | 2 | **5** |
+| **P2 - Fragmentación e incompatibilidad tecnológica del ecosistema informático** | 2 | - | 2 | **4** |
+| **P3 - Dificultades para la validación digital de la responsabilidad parental (RENAPER)** | 1 | 2 | - | **3** |
+
+*Escala de evaluación de fuerza causal sobre los demás problemas: 1 (Baja), 2 (Media), 3 (Alta).*
+
+**Análisis de Resultados:** **P1** resulta ser el problema causa-raíz (5 puntos de incidencia total), dado que la rigidez arquitectónica y legal para modelar la autonomía progresiva desencadena las fallas de confidencialidad e impregna las dificultades de interoperabilidad.
+
+---
+
+## 5.3 Alternativas de Política Pública
 
 | Alternativa | Valoración |
-|---|---:|
-| A1. Arquitectura federada + módulo de autonomía y confidencialidad | 17 |
-| A2. Repositorio centralizado | 9 |
-| A3. Guías no vinculantes sin infraestructura interoperable | 10 |
+| :--- | ---: |
+| **A1. Arquitectura federada + módulo de autonomía y confidencialidad (AMFE)** | **17** |
+| **A2. Repositorio centralizado** | **9** |
+| **A3. Guías no vinculantes sin infraestructura interoperable** | **10** |
 
-La alternativa seleccionada es **A1**, debido a que permite combinar interoperabilidad, protección de datos, seguridad y reconocimiento de la autonomía progresiva.
+La alternativa seleccionada es **A1**, debido a que ataca directamente el problema causa-raíz (**P1**) y resuelve la necesidad jerarquizada con mayor puntaje (**N1**), permitiendo combinar interoperabilidad, protección de datos, ciberseguridad y el reconocimiento efectivo de la autonomía progresiva.
 
 ---
 
