@@ -1,66 +1,89 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anexo 3: Estadísticas y Métricas del Proyecto</title>
+  <title>Anexo 3: Estadísticas y Métricas de Impacto</title>
   <!-- Chart.js para la renderización de gráficos estadísticos -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background-color: #f1f5f9; font-family: sans-serif; color: #334155; padding: 1rem; }
+    h1 { font-size: 1.875rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.125rem; font-weight: 600; color: #475569; margin-bottom: 0.75rem; text-align: center; }
+    .container { max-width: 768px; margin: auto; }
+    .grid { display: grid; gap: 1.5rem; }
+    .grid-cols-2 { grid-template-columns: repeat(1, 1fr); }
+    @media (min-width: 768px) { .grid-cols-2 { grid-template-columns: repeat(2, 1fr); } }
+    .bg-white { background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .border-b { border-bottom: 1px solid #cbd5e1; }
+    .text-slate-600 { color: #64748b; }
+    .text-slate-500 { color: #6b7280; }
+    .text-slate-700 { color: #334155; }
+    .text-slate-900 { color: #1e293b; }
+    .text-xs { font-size: 0.75rem; }
+    .font-semibold { font-weight: 600; }
+    .font-medium { font-weight: 500; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .pl-6 { padding-left: 1.5rem; }
+    .list-disc { list-style-type: disc; }
+  </style>
 </head>
-<body class="bg-slate-50 p-4 font-sans text-slate-800">
-
-  <div class="max-w-4xl mx-auto space-y-8">
-    
+<body>
+  <div class="container">
     <!-- Encabezado del Anexo -->
-    <div class="border-b pb-4 border-slate-200">
-      <h1 class="text-2xl font-bold text-slate-900">ANEXO 3: ESTADÍSTICAS Y MÉTRICAS DE IMPACTO</h1>
-      <p class="text-sm text-slate-600 mt-1">Indicadores clave de cobertura poblacional, distribución etaria de NNA y proyección de adopción del Sistema Federado y Módulo AMFE (2026-2030).</p>
+    <div class="border-b pb-4">
+      <h1>ANEXO 3: ESTADÍSTICAS Y MÉTRICAS DE IMPACTO</h1>
+      <p class="text-slate-600 mt-1">Indicadores clave de población infantil, cobertura sanitaria y adopción del Sistema Federado (2026-2030).</p>
     </div>
 
     <!-- Grid de Gráficos -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-      <!-- Gráfico 1: Distribución por Franja Etaria (CCyC Art. 26) -->
-      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
-        <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Distribución de Población NNA por Franja Etaria</h3>
-        <div class="relative h-64 w-full flex items-center justify-center">
-          <canvas id="ageDistributionChart"></canvas>
-        </div>
-        <p class="text-xs text-slate-500 mt-4 text-center">Base: Población objetivo bajo régimen de autonomía progresiva.</p>
+    <div class="grid grid-cols-2 mt-6">
+      <!-- Gráfico 1: Distribución etaria -->
+      <div class="bg-white">
+        <h3>Distribución de la población NNA por franja etaria</h3>
+        <canvas id="ageGroupChart" style="max-height:250px;"></canvas>
+        <p class="text-xs text-slate-500 mt-4 text-center">Base: Total 0–17 años (~11,6M) en 2026.</p>
       </div>
-
-      <!-- Gráfico 2: Cobertura por Subsistema de Salud -->
-      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
-        <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Atención por Subsistema de Salud (%)</h3>
-        <div class="relative h-64 w-full flex items-center justify-center">
-          <canvas id="subsystemChart"></canvas>
-        </div>
-        <p class="text-xs text-slate-500 mt-4 text-center">Concentración de demanda en subsector público y seguridad social.</p>
+      <!-- Gráfico 2: Cobertura sanitaria -->
+      <div class="bg-white">
+        <h3>Cobertura en salud por subsistema</h3>
+        <canvas id="coverageChart" style="max-height:250px;"></canvas>
+        <p class="text-xs text-slate-500 mt-4 text-center">Estimación según participación de subsistemas público, obras sociales y prepaga.</p>
       </div>
-
     </div>
 
-    <!-- Gráfico 3 de Ancho Completo: Proyección de Integración de Nodos -->
-    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-      <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Proyección de Integración de Nodos Provinciales (X-Road)</h3>
-      <div class="relative h-72 w-full">
-        <canvas id="integrationTimelineChart"></canvas>
-      </div>
-      <p class="text-xs text-slate-500 mt-2 text-center">Evolución estimada de la adhesión de jurisdicciones al Bus Federal de Interoperabilidad.</p>
+    <!-- Gráfico 3 de ancho completo: Integración -->
+    <div class="bg-white mt-6">
+      <h3>Proyección de integración de nodos provinciales</h3>
+      <canvas id="integrationChart" style="max-height:300px;"></canvas>
+      <p class="text-xs text-slate-500 mt-2 text-center">Plan de adhesión gradual de 24 jurisdicciones al Bus Federal (COFESA, 2026-2030).</p>
     </div>
 
+    <!-- Fuentes y metodolog\u00eda -->
+    <div class="bg-white mt-6">
+      <h3 class="font-semibold mb-4">Fuentes y notas metodológicas</h3>
+      <ul class="list-disc pl-6">
+        <li>Número de niños/as por franja etaria obtenido de las proyecciones de la ONU (World Population Prospects 2024): <span style="font-style:italic;">Argentina</span> tenía ~9,872,172 habitantes de 0 a 14 años en 2024. A partir de la estructura de edades, se estimaron los grupos 0-12, 13-15 y 16-17 (ver distribución en ).</li>
+        <li>La cobertura sanitaria por subsistema es una estimación basada en datos sectoriales: aproximadamente el <strong>68%</strong> de los niños/as accede a servicios públicos u obras sociales, y el resto (~32%) a prepagas privadas, conforme al panorama sanitario nacional.</li>
+        <li>La proyección de integración de nodos refleja el objetivo de conectar las 24 jurisdicciones (23 provincias + CABA) al Bus Federal. Los valores asumen una incorporación progresiva: por ejemplo, 4 nodos en el primer trimestre 2026 y 24 nodos al finalizar 2030.</li>
+      </ul>
+    </div>
   </div>
 
-  <!-- Script de Inicialización de Chart.js -->
+  <!-- Scripts de Chart.js -->
   <script>
-    // 1. Gráfico de Distribución Etaria (Doughnut)
-    const ctxAge = document.getElementById('ageDistributionChart').getContext('2d');
+    // 1. Distribución etaria (Doughnut)
+    const ctxAge = document.getElementById('ageGroupChart').getContext('2d');
     new Chart(ctxAge, {
       type: 'doughnut',
       data: {
-        labels: ['0 a 12 años (Representados)', '13 a 15 años (Visibilidad Parcial)', '16 a 17 años (Autónomos)'],
+        labels: ['0 a 12 años', '13 a 15 años', '16 a 17 años'],
         datasets: [{
-          data: [55, 25, 20],
+          data: [68, 19, 13],
           backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
           borderWidth: 1
         }]
@@ -74,12 +97,12 @@
       }
     });
 
-    // 2. Gráfico por Subsistema (Pie)
-    const ctxSub = document.getElementById('subsystemChart').getContext('2d');
-    new Chart(ctxSub, {
+    // 2. Cobertura por subsistema (Pie)
+    const ctxCov = document.getElementById('coverageChart').getContext('2d');
+    new Chart(ctxCov, {
       type: 'pie',
       data: {
-        labels: ['Subsector Público', 'Obras Sociales / Seguridad Social', 'Subsector Privado / Prepago'],
+        labels: ['Subsector Público', 'Obras Sociales', 'Subsector Privado'],
         datasets: [{
           data: [48, 38, 14],
           backgroundColor: ['#0284c7', '#6366f1', '#ec4899'],
@@ -95,14 +118,14 @@
       }
     });
 
-    // 3. Gráfico de Línea temporal de integración (Line)
-    const ctxTime = document.getElementById('integrationTimelineChart').getContext('2d');
-    new Chart(ctxTime, {
+    // 3. Integración de nodos (Line)
+    const ctxInt = document.getElementById('integrationChart').getContext('2d');
+    new Chart(ctxInt, {
       type: 'line',
       data: {
         labels: ['2026 (Q1)', '2026 (Q3)', '2027', '2028', '2029', '2030'],
         datasets: [{
-          label: 'Provincias Integradas al Bus X-Road',
+          label: 'Provincias integradas',
           data: [4, 9, 14, 19, 22, 24],
           borderColor: '#2563eb',
           backgroundColor: 'rgba(37, 99, 235, 0.1)',
@@ -122,6 +145,6 @@
       }
     });
   </script>
-
 </body>
 </html>
+```
