@@ -23,10 +23,6 @@ El proyecto identifica como actores principales:
 - Agencia de Acceso a la Información Pública (AAIP), en su carácter de autoridad de aplicación en materia de protección de datos personales.
 - Organismos nacionales y jurisdiccionales competentes en materia de niñez y adolescencia.
 - RENAPER, cuando corresponda y resulte jurídicamente y técnicamente viable.
-- Establecimientos sanitarios públicos, de la seguridad social y privados.
-- Profesionales de la salud.
-- Niños, niñas y adolescentes como titulares de derechos.
-- Madres, padres y responsables en el marco de la responsabilidad parental.
 
 ### 1.2 Materia, sector y territorio
 
