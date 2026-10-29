@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anexo 3: Estadísticas y Métricas del Proyecto</title>
+  <!-- Chart.js para la renderización de gráficos estadísticos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-50 p-4 font-sans text-slate-800">
+
+  <div class="max-w-4xl mx-auto space-y-8">
+    
+    <!-- Encabezado del Anexo -->
+    <div class="border-b pb-4 border-slate-200">
+      <h1 class="text-2xl font-bold text-slate-900">ANEXO 3: ESTADÍSTICAS Y MÉTRICAS DE IMPACTO</h1>
+      <p class="text-sm text-slate-600 mt-1">Indicadores clave de cobertura poblacional, distribución etaria de NNA y proyección de adopción del Sistema Federado y Módulo AMFE (2026-2030).</p>
+    </div>
+
+    <!-- Grid de Gráficos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Gráfico 1: Distribución por Franja Etaria (CCyC Art. 26) -->
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+        <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Distribución de Población NNA por Franja Etaria</h3>
+        <div class="relative h-64 w-full flex items-center justify-center">
+          <canvas id="ageDistributionChart"></canvas>
+        </div>
+        <p class="text-xs text-slate-500 mt-4 text-center">Base: Población objetivo bajo régimen de autonomía progresiva.</p>
+      </div>
+
+      <!-- Gráfico 2: Cobertura por Subsistema de Salud -->
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+        <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Atención por Subsistema de Salud (%)</h3>
+        <div class="relative h-64 w-full flex items-center justify-center">
+          <canvas id="subsystemChart"></canvas>
+        </div>
+        <p class="text-xs text-slate-500 mt-4 text-center">Concentración de demanda en subsector público y seguridad social.</p>
+      </div>
+
+    </div>
+
+    <!-- Gráfico 3 de Ancho Completo: Proyección de Integración de Nodos -->
+    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+      <h3 class="font-semibold text-slate-700 text-sm mb-4 text-center">Proyección de Integración de Nodos Provinciales (X-Road)</h3>
+      <div class="relative h-72 w-full">
+        <canvas id="integrationTimelineChart"></canvas>
+      </div>
+      <p class="text-xs text-slate-500 mt-2 text-center">Evolución estimada de la adhesión de jurisdicciones al Bus Federal de Interoperabilidad.</p>
+    </div>
+
+  </div>
+
+  <!-- Script de Inicialización de Chart.js -->
+  <script>
+    // 1. Gráfico de Distribución Etaria (Doughnut)
+    const ctxAge = document.getElementById('ageDistributionChart').getContext('2d');
+    new Chart(ctxAge, {
+      type: 'doughnut',
+      data: {
+        labels: ['0 a 12 años (Representados)', '13 a 15 años (Visibilidad Parcial)', '16 a 17 años (Autónomos)'],
+        datasets: [{
+          data: [55, 25, 20],
+          backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+        }
+      }
+    });
+
+    // 2. Gráfico por Subsistema (Pie)
+    const ctxSub = document.getElementById('subsystemChart').getContext('2d');
+    new Chart(ctxSub, {
+      type: 'pie',
+      data: {
+        labels: ['Subsector Público', 'Obras Sociales / Seguridad Social', 'Subsector Privado / Prepago'],
+        datasets: [{
+          data: [48, 38, 14],
+          backgroundColor: ['#0284c7', '#6366f1', '#ec4899'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+        }
+      }
+    });
+
+    // 3. Gráfico de Línea temporal de integración (Line)
+    const ctxTime = document.getElementById('integrationTimelineChart').getContext('2d');
+    new Chart(ctxTime, {
+      type: 'line',
+      data: {
+        labels: ['2026 (Q1)', '2026 (Q3)', '2027', '2028', '2029', '2030'],
+        datasets: [{
+          label: 'Provincias Integradas al Bus X-Road',
+          data: [4, 9, 14, 19, 22, 24],
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37, 99, 235, 0.1)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 24 }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
